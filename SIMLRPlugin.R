@@ -1,4 +1,4 @@
-dyn.load("/usr/local/bin/plugins/SIMLR/projsplx_R.so");
+dyn.load("projsplx_R.so");
 
 
 # perform the SIMLR clustering algorithm
