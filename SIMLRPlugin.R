@@ -654,7 +654,7 @@ input <- function(inputfile) {
   #X[2] <<- as.matrix(read.csv(paste(inputfile, ".spearman.csv", sep=""), header = TRUE));
   #X[3] <<- as.matrix(read.csv(paste(inputfile, ".dcov.csv", sep=""), header = TRUE));
   #X[4] <<- as.matrix(read.csv(paste(inputfile, ".MIC.csv", sep=""), header = TRUE));
-  pc <<- read.csv(paste(inputfile, ".pearson.csv", sep=""), header = TRUE);
+  pc <<- read.csv(paste(inputfile, sep=""), header = TRUE);
  
   X <<- list(as.matrix(pc), as.matrix(pc)
              #as.matrix(read.csv(paste(inputfile, ".spearman.csv", sep=""), header = TRUE)),
@@ -664,11 +664,11 @@ input <- function(inputfile) {
   for (k in 1:length(X)) {
      for (i in 1:length(pc)) {
         for (j in 1:length(pc)) {
-           print("BEFORE");
-           print(X[[k]][i, j]);
+           #print("BEFORE");
+           #print(X[[k]][i, j]);
            X[[k]][i, j] = 1 - X[[k]][i, j]
-           print("AFTER");
-           print(X[[k]][i, j]);
+           #print("AFTER");
+           #print(X[[k]][i, j]);
         }
      }
   }
@@ -684,58 +684,21 @@ run <- function() {
 }
 
 output <- function(outputfile) {
-   ##print("xxxxxxxxxxxxxxxxxxxxxxxxxx");
-   #print("CN");
-   #print(cn);
-   #print("Y:");
-   #print(results$y);
-   #print("CLUSTER:");
-   #print(results$y$cluster);
-   print("LENGTH");
-   print(length(results$y$cluster));
-   #print("HELLO");
-   #fileConn<-file(outputfile);
-   #cat("hello");
-   #cat("\n");
-   #cat("world");
-   #write("hello\n", fileConn);
-   #write("world\n", fileConn);
    outNOA <- paste(outputfile,".noa", sep="");
-   print("NCLUST");
-   print(nclust);
-   print(outNOA);
    myClust <- vector("list", nclust);
-   print("Z");
-   print("RESULTSYCLUSTER");
-   print(results$y$cluster);
    sink(outNOA);
-   #print("Y");
    cat("Name");
-   #print("X");
    cat("\t");
-   #print("W");
    cat("Cluster");
-   #print("V");
    cat("\n");
-   #print("HELLO");
-   #print(length(results$y$cluster));
    for (i in 1:length(results$y$cluster)) {
-      #print("A");
       cat(noquote(names(pc))[i]);
-      #print("B");
       cat("\t");
-      #print("C");
       cat(strtoi(results$y$cluster[i]));
-      #print("D");
       cat("\n");
-      #print("BEFORE CLUSTER");
       myClust[[strtoi(results$y$cluster[i])]] = c(myClust[[strtoi(results$y$cluster[i])]], names(pc)[i]);
-      #print("INTERNAL CLUSTER");
-      #print(strtoi(results$y$cluster[i]));
-      #print(myClust[[strtoi(results$y$cluster[i])]]);
    }
    sink();
-   #print("DOING CSV....");
    outCSV <- paste(outputfile,".csv",sep="");
    sink(outCSV);
    for (i in 1:nclust) {
@@ -753,11 +716,6 @@ output <- function(outputfile) {
       }
    }
    sink();
-   #close(fileConn);
-   #print("FIRST ROW");
-   #print(names(pc)[1]);
-   #print("xxxxxxxxxxxxxxxxxxxxxxxxxx");
-   #write.table(results$S, file=outputfile, sep=",", append=FALSE, row.names=unlist(cn), col.names=unlist(cn), na="");
 }
 
 
