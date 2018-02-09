@@ -5,6 +5,7 @@
 #             This file can be placed in the PluMA root directory
 # Input: prefix (for multiple network files)
 # Output: prefix (for CSV and NOA file for clusters) 
+# Tested with: PluMA 1.0, R 3.2.5
 
 PluMA plugin to cluster a network using the Single-Cell Interpretation
 via Multiple Kernel Learning (SIMLR, Wang et al. 2017).
