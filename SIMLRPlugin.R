@@ -5,8 +5,6 @@ dyn.load("projsplx_R.so");
 #"SIMLR" <- function( X, c , no.dim = NA, k = 10, impute = FALSE, normalize = FALSE, cores.ratio = 1 ) {
 #"SIMLR" <- function( D_Kernels, c , no.dim = NA, k = 10, impute = FALSE, normalize = FALSE, cores.ratio = 1 ) {
 "SIMLR" <- function( D_Kernels, c , pc,  no.dim = NA, k = 10, impute = FALSE, normalize = FALSE, cores.ratio = 1 ) {
-    #print("X MATRIX:");
-    #print(D_Kernels);
     # set any required parameter to the defaults
     if(is.na(no.dim)) {
         no.dim = c
@@ -59,16 +57,12 @@ dyn.load("projsplx_R.so");
 
     # sort distX for rows
     res = apply(distX,MARGIN=1,FUN=function(x) return(sort(x,index.return = TRUE)))
-    #print("A")
     distX1 = array(0,c(nrow(distX),ncol(distX)))
-    #print("B")
     idx = array(0,c(nrow(distX),ncol(distX)))
-    #print("C")
     for(i in 1:nrow(distX)) {
         distX1[i,] = res[[i]]$x
         idx[i,] = res[[i]]$ix
     }
-    #print("HELLO")
     A = array(0,c(num,num))
     di = distX1[,2:(k+2)]
     rr = 0.5 * (k * di[,k+1] - apply(di[,1:k],MARGIN=1,FUN=sum))
@@ -130,7 +124,6 @@ dyn.load("projsplx_R.so");
         S = network.diffusion(S,k)
         D = diag(apply(S,MARGIN=2,FUN=sum))
         L = D - S
-        #print("BEFORE FOLD")
         F_old = F_eig1
         eig1_res = eig1(L,c,0)
         F_eig1 = eig1_res$eigvec
@@ -138,16 +131,12 @@ dyn.load("projsplx_R.so");
         ev_eig1 = eig1_res$eigval_full
         evs_eig1 = cbind(evs_eig1,ev_eig1)
         DD = vector()
-        #print("AFTER VECTOR")
         #for (i in 1:length(D_Kernels)) {
         for (i in 1:length(D_Kernels)) {
             temp = (.Machine$double.eps+D_Kernels[[i]]) * (S+.Machine$double.eps)
-            #print("DD")
             temp = as.matrix(temp)
             DD[i] = mean(apply(temp,MARGIN=2,FUN=sum))
-            #print("EE")
         }
-        #print("BEFORE ALPHA")
         alphaK0 = umkl(DD)
         alphaK0 = alphaK0 / sum(alphaK0)
         alphaK = (1-beta) * alphaK + beta * alphaK0
@@ -174,15 +163,12 @@ dyn.load("projsplx_R.so");
         
         # compute Kbeta
         distX = D_Kernels[[1]] * alphaK[1]
-        #print("RUNNING KERNELS")
         for (i in 2:length(D_Kernels)) {
             distX = distX + as.matrix(D_Kernels[[i]]) * alphaK[i]
         }
-        #print("DONE RUNNING KERNELS")
         distX = as.matrix(distX)
         # sort distX for rows
         res = apply(distX,MARGIN=1,FUN=function(x) return(sort(x,index.return = TRUE)))
-        #print("AFTER RES")
         distX1 = array(0,c(nrow(distX),ncol(distX)))
         idx = array(0,c(nrow(distX),ncol(distX)))
         for(i in 1:nrow(distX)) {
@@ -231,8 +217,6 @@ dyn.load("projsplx_R.so");
     results[["execution.time"]] = execution.time
     results[["converge"]] = converge
     results[["LF"]] = LF
-    #print("Y: ");
-    #print(y);
     return(results)
     
 }
@@ -664,11 +648,7 @@ input <- function(inputfile) {
   for (k in 1:length(X)) {
      for (i in 1:length(pc)) {
         for (j in 1:length(pc)) {
-           #print("BEFORE");
-           #print(X[[k]][i, j]);
            X[[k]][i, j] = 1 - X[[k]][i, j]
-           #print("AFTER");
-           #print(X[[k]][i, j]);
         }
      }
   }
