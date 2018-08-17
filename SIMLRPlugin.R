@@ -1,3 +1,4 @@
+set.seed(1234)  # Testing only
 dyn.load("projsplx_R.so");
 
 
