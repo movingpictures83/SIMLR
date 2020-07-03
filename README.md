@@ -1,11 +1,9 @@
 # SIMLR
 # Language: R
-# Dependency: Requires SIMLR package, and specifically references projsplx_R.so
-#             SIMLR is available at: https://github.com/BatzoglouLabSU/SIMLR
-#             This file can be placed in the PluMA root directory
-# Input: prefix (for multiple network files)
+# Input: CSV
 # Output: prefix (for CSV and NOA file for clusters) 
-# Tested with: PluMA 1.0, R 3.2.5
+# Tested with: PluMA 1.1, R 4.0.0
+# Dependency: Requires SIMLR package, and specifically references projsplx_R.so.  SIMLR is available at: https://github.com/BatzoglouLabSU/SIMLR.  This file can be placed in the PluMA root directory
 
 PluMA plugin to cluster a network using the Single-Cell Interpretation
 via Multiple Kernel Learning (SIMLR, Wang et al. 2017).
